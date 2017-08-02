@@ -1,0 +1,45 @@
+Título: Classificação de coloração imuno-histoquímica em imagens microscópicas
+
+Autores: Marcelo Dornbusch Lopes
+Orientador: Eros Comunello, Dr. rer. nat.
+
+Local: São José (SC)
+Data: Fevereiro de 2015
+
+Problema Abordado:
+    Descrição e classificação automatizada da expressão de biomarcadores em imagens 
+microscópicas de imuno-histoquímica.
+
+Solução Proposta:
+    A solução proposta teve como objetivo aprimorar o desempenho de classificação do método 
+DPM(considerando taxas de acerto e erro), apresentado por Sobieranski chegando a isso
+pela incorporação de atributos de textura ao descritor de características, usado como 
+entrada para o método de classificação.
+
+Avaliação:
+    Nas avaliações de desempenho de classificação, foram avaliadas sete medidas relacionadas
+a taxas de acerto(positivos e negativos), Sensibilidade, Especificidade, Precisão, Taxa 
+de Predição Negativa, Acurácia, F1 Escore e Coeficiente de correlação de Matteews. Para as
+avaliações de erros foram avaliadas três medidas, Taxa de Falso Positivo, Taxa de Falso 
+Negativo e Taxa de Falsa Descoberta.
+    No teste piloto de classificação foi utilizado 10 imagens, avaliando o comportamento dos 
+três descritores(RGB,RGB-LBP completo, e o primeiro descritor reduzido).O maior valor da 
+Taxa de Verdadeiro Positivo foi encontro com o descritor RHB simples(0.9986), a maior
+medida de Taxa de Verdadeiro Negativo foi encontrada com o descrito LBP Completo(0.9995).
+A maior diferença entre descritores ocorreu na medida de Precisão, 0.9522 do descrito LBP
+reduzido(Média e Energia), contra 0.8594 do descritor RGB.
+    Nas taxas de erro avaliadas no teste piloto, somente na Taxa de Falso Negativo o
+descritor RGB apresentou o menor valor(0.0003). A maior diferença encontrada ocorreu na
+Taxa de Falsa Descoberta, 0.1406 com o descritor RGB, contra 0.0478, com o descritor LBP
+reduzido.
+
+Resultados: 
+    A proposta inicial previa a utilização do método LBP tradicional, entretanto
+o método LBP baseado em Variância se mostrou melhor no contexto das imagens utilizadas.
+    O usodo método LBP resultou em uma imagem de resposta de textura, menor custo
+consequentemente, quando comparado com o método de Matriz de coocorrência ou método de
+Laws.
+    O emprego das informações de textura no descritor tornou o processo de classificação
+mais específica e preciso. Em contrapartida houve um aumento no tempo de classsificação,
+entretanto este impacto, considerando número de instruções e tempo de processamento não
+foram avaliados durante o trabalho.
