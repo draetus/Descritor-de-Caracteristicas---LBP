@@ -1,3 +1,7 @@
+Livros: 
+1. Probabilidade e estatisticas pro curso de Informatica e engenharia
+*----------------------------*----------------------------*----------------------------*
+
 Título: Classificação de coloração imuno-histoquímica em imagens microscópicas
 
 Autores: Marcelo Dornbusch Lopes
@@ -20,12 +24,35 @@ Avaliação:
     A avaliação foi feita a partir de uma visão dos classificadores como uma função, que
 tem como saída um escore e uma classe, este escore representa a probabilidade de uma 
 amostra pertencer a uma determinada classe e a atribuição acontece de acordo com alguma
-regra de decisão estabelecida, existem quatro possibilidades de resultado. caso a predição
+regra de decisão estabelecida, existem quatro possibilidades de resultado: caso a predição
 e o valor anotado para a amostra forem positivos, é computado um Verdadeiro Positivo(VP),
 caso ambos forem negativos, é computado um Verdadeiro Negativo(VN), com uma predição 
 negativa e uma anotação positiva, é computado como Falso Negativo(FN) e quando a predição
 é positiva e o valor anotado é negativo, o resultado de classificação é dito Falso 
 Positivo(FP).
+---
+    Nas avaliações de desempenho de classificação, foram avaliadas sete medidas relacionadas
+a Sensibilidade(SEM), Especificidade(ESP), Precisão(PRE), Taxa de Predição Negativa(T-PN), 
+Taxa de Falso Positivo(T-FP), Taxa de Falso Positivo(T-FP), Taxa de Falsa Descoberta(T-FD), 
+Taxa de Falso Negativo(T-FN), Acurácia(ACC), F1 Escore(F1), Coeficiente de Correlação de 
+Mattews(MCC). Para as avaliações de erros foram avaliadas três medidas, Taxa de Falso 
+Positivo(T-FP), Taxa de Falso Negativo(T-FN) e Taxa de Falsa Descoberta(T-FD).
+---
+    No teste piloto foi definido um conjunto de treinamento com 5100 amostras e um conjunto
+de testes com 10 imagens (com dimensões 508x508), referentes ao anticorpo CAB000316
+_______________________________________
+    No teste piloto de classificação foi utilizado 10 imagens, avaliando o comportamento dos 
+três descritores(RGB,RGB-LBP completo, e o primeiro descritor reduzido).O maior valor da 
+Taxa de Verdadeiro Positivo foi encontrado com o descritor RHB simples(0.9986), a maior
+medida de Taxa de Verdadeiro Negativo foi encontrada com o descrito LBP Completo(0.9995).
+A maior diferença entre descritores ocorreu na medida de Precisão, 0.9522 do descrito LBP
+reduzido(Média e Energia), contra 0.8594 do descritor RGB.
+    Nas taxas de erro avaliadas no teste piloto, somente na Taxa de Falso Negativo o
+descritor RGB apresentou o menor valor(0.0003). A maior diferença encontrada ocorreu na
+Taxa de Falsa Descoberta, 0.1406 com o descritor RGB, contra 0.0478, com o descritor LBP
+reduzido.
+_______________________________________
+---
 
 Resultados: 
     A proposta inicial previa a utilização do método LBP tradicional, entretanto
