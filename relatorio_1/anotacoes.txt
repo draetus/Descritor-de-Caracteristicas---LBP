@@ -1,0 +1,39 @@
+https://docs.opencv.org/2.4/doc/tutorials/ml/introduction_to_svm/introduction_to_svm.html
+
+------------------------------SVM------------------------------
+    Uma SVM(Support Vector Machine) é um classificador discriminativo definido formalmente por
+um hiperplano(uma reta) separador. Em outras palavras, dado dados de treinamento com etiquetas
+(aprendizado supervisionado), o algoritmo retorna o melhor hiperplano possivel.           
+    O que define se um hiperplano é bom ou não, é a media mais igualitaria de distancia entre
+os dois pontos dados, por exemplo, para um conjunto linear de pontos de duas dimensões, que
+cada um pertence a uma classe, é desejado achar a linha que separa os dois, o objetivo é achar
+a linha que passa o mais distante possivel dos dois pontos, ou seja, o meio. Então o algoritmo
+da SVM e baseado em achar o hiperplano que da a maior distancia minima entre os exemplos de
+treinamento, essa distancia recebe o nome de margem, portanto o melhor hiperplano é o que
+maximiza a margem dos dados de treinamento.
+
+-----PROCESSO-----
+    Aqui será explicado como funciona o processo do exemplo citado acima:
+    Primeiramente os dados de treinamentos desse exemplo são formados por um conjunto de
+pontos de duas dimensões que pertencem a duas classes diferentes, uma com tres pontos e 
+outra com apenas um ponto, depois é definido alguns parametros antes do treinamento da SVM,
+especificando que o problema é apenas uma separação linear, essa etapa é necessaria pois a
+SVM pode ser usada para varios tipos de problemas diferentes, depois é efetuado o treinamento
+da SVM, e então ela classifica as regiões, no exemplo a SVM colore o espaço dependendo
+da predição feita, cada ponto é colorido dependendo da classe prevista, classificando todos
+os pixels da imagem, isso gera duas partes com cores diferentes, a linha divisória dessas 
+cores é o hiperplano separador.
+
+
+------------------------------KNN------------------------------
+    KNN(K-nearest neighbors) pode ser usada para problemas de classificação e predição de 
+regressão, mas é muito mais usado para problemas de classificação na industria, o K seria
+a quantidade de vizinhos proximos que queremos levar em consideração.
+    Por exemplo vamos supor que um ponto de uma classe esta entre outras 2 classes, cada uma
+com 3 pontos proprios, então escolhemos a quantidade de pontos mais proximos que queremos
+levar em consideração, no caso escolhemos 3, agora vamos supor que a primeira classes todos
+os pontos estejam mais proximos do ponto principal, então esse ponto principal será considerado
+da primeira classe.
+    Esse parametro K, pode interferir na borda dividindo as classes, ou seja, quanto maior
+esse valor, mais suaves serão as bordas, quando é levado ao infinito, só restará uma classe
+que seria a com maior quantidade de pontos.
