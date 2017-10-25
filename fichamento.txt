@@ -66,3 +66,6 @@ foram avaliados durante o trabalho.
     A principal contribuição alcançada com este trabalho de pesquisa foi aprimorar o 
 método classificação de coloração em imagens de IHQ, considerando as medidas de Precisão,
 Taxa de Falso Negativo e Taxa de Falso Descobrimento, apresentado por Sobieranski.
+
+
+http://www.cbpf.br/cat/pdsi/pdf/ProcessamentoImagens.PDF
