@@ -1,4 +1,8 @@
 https://docs.opencv.org/2.4/doc/tutorials/ml/introduction_to_svm/introduction_to_svm.html
+https://en.wikipedia.org/wiki/Support_vector_machine
+https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm
+http://www.saedsayad.com/k_nearest_neighbors.htm
+https://www.analyticsvidhya.com/blog/2014/10/introduction-k-neighbours-algorithm-clustering/
 
 ------------------------------SVM------------------------------
     Uma SVM(Support Vector Machine) é um classificador discriminativo definido formalmente por
@@ -37,3 +41,8 @@ da primeira classe.
     Esse parametro K, pode interferir na borda dividindo as classes, ou seja, quanto maior
 esse valor, mais suaves serão as bordas, quando é levado ao infinito, só restará uma classe
 que seria a com maior quantidade de pontos.
+
+------------------------------Gabor------------------------------
+    O filtro Gabor é um filtro linear usado para analise de textura, o que significa que
+basicamente ele analiza se tem algum conteudo de frequência especifica na imagem em direções
+especificas em uma região localizada ao redor do ponto ou região de analise
