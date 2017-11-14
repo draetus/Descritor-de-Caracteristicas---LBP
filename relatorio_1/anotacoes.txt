@@ -3,11 +3,18 @@ https://en.wikipedia.org/wiki/Support_vector_machine
 https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm
 http://www.saedsayad.com/k_nearest_neighbors.htm
 https://www.analyticsvidhya.com/blog/2014/10/introduction-k-neighbours-algorithm-clustering/
+https://en.wikipedia.org/wiki/Gabor_filter
+https://www.mathworks.com/help/images/texture-segmentation-using-gabor-filters.html
+http://www.cse.iitm.ac.in/~vplab/courses/CV_DIP/PDF/Lect-Gabor_filt.pdf
+http://scikit-image.org/docs/dev/auto_examples/features_detection/plot_gabor.html
+https://en.wikipedia.org/wiki/Texel_(graphics)
+
+http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.649.8620&rep=rep1&type=pdf
 
 ------------------------------SVM------------------------------
     Uma SVM(Support Vector Machine) é um classificador discriminativo definido formalmente por
 um hiperplano(uma reta) separador. Em outras palavras, dado dados de treinamento com etiquetas
-(aprendizado supervisionado), o algoritmo retorna o melhor hiperplano possivel.           
+(aprendizado supervisionado), o algoritmo retorna o melhor hiperplano possivel.
     O que define se um hiperplano é bom ou não, é a media mais igualitaria de distancia entre
 os dois pontos dados, por exemplo, para um conjunto linear de pontos de duas dimensões, que
 cada um pertence a uma classe, é desejado achar a linha que separa os dois, o objetivo é achar
@@ -42,7 +49,55 @@ da primeira classe.
 esse valor, mais suaves serão as bordas, quando é levado ao infinito, só restará uma classe
 que seria a com maior quantidade de pontos.
 
+
+-----------------------Analise de Textura----------------------
+    Textura é a repetição regular de um elemento ou padrão em uma superficie, o propósito
+da analise de textura é:
+ * Identificar diferentes regiões texturizadas e não texturizadas em uma imagem.
+ * Classificar/Segmentar diferentes regiões de textura em uma imagem.
+ * Extrair bordas entre texturas em uma imagem
+
+    1.1  Métodos de filtragem:
+ * Discrete Wavelet Transform(DWT)
+ * Gabor Filter(Bank of 8 Gabor filters)
+ * Discrete Cosine Transform (DCT)
+ * Gaussian Markov random field models
+ * Combination of DWT and Gabor filter
+ * Combinatio of DWT and MRF
+
+    1.2 Não-Linear:
+ * Magnitude(|.|)
+
+    2.1 Suavização(Smoothing):
+ * Gaussian filter.
+
+    3.1 Vetores de caracteristicas:
+ * Mean (computado em uma janela local em torno de um pixel).
+
+    4.1 Classificação:
+ * Fuzzy-C Means (FCM) (classificador não supervisionado)
+
+    Segmentação é um termo comumente usado para identificar diferenças entre objetos 
+interessantes ou desinteressantes como também de distinguir primeiro plano(foreground) de
+segundo plano(background), realçando pequenas partes da imagem, facilitando a analise feita
+por um usuario, e podem se basear tanto em regiões como em bordas.
+
+    Algoritmo Ex:
+ 1. Ler imagem (x = imagem)
+ 2. Se imagem está em cores, então converte-la para escalas de cinza (preto e branco)
+ 3. Aplicar um filtro a imagem
+ 4. Se tiver região de extração então
+ 5. Mostrar imagem segmentada
+    Senão
+ 6. Repetir passo 3
+ 7. Fim
+
 ------------------------------Gabor------------------------------
     O filtro Gabor é um filtro linear usado para analise de textura, o que significa que
 basicamente ele analiza se tem algum conteudo de frequência especifica na imagem em direções
-especificas em uma região localizada ao redor do ponto ou região de analise
+especificas em uma região localizada ao redor do ponto ou região de analise.
+    Representações de frequencia e orientação do filtro Gabor são similiares ao sistema 
+de visão humano, e são apropriados para representação de textura e discriminação. Células
+simples no cortex visual do cérebro dos mamiferos podem ser modeladas por funções de Gabor,
+portanto, julga-se que a analise de imagem pelos filtros Gabor é semelhante a percepção do
+sistema visual humano.
