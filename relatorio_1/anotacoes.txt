@@ -56,7 +56,7 @@ da analise de textura é:
  * Identificar diferentes regiões texturizadas e não texturizadas em uma imagem.
  * Classificar/Segmentar diferentes regiões de textura em uma imagem.
  * Extrair bordas entre texturas em uma imagem
-
+---
     1.1  Métodos de filtragem:
  * Discrete Wavelet Transform(DWT)
  * Gabor Filter(Bank of 8 Gabor filters)
@@ -76,7 +76,20 @@ da analise de textura é:
 
     4.1 Classificação:
  * Fuzzy-C Means (FCM) (classificador não supervisionado)
+---
+    Existem quatro maiores problemas na analise de textura:
+ * Extração de recursos: Computar uma caracteristica de uma imagem digital para 
+numericamente descrever suas propriedades de textura
 
+ * Discriminação de Textura: Parcionar uma imagem texturizada em regiões, cada uma 
+correspondendo a uma textura homogenea (leva a segmentação de imagem)
+
+ * Classificação de Textura: Determinar para qual numero finito de classes fisicamente 
+definidas(como parte normal e parte anormal) aquela região de textura homogenea pertence
+
+ * Formar da textura: Reconstruir uma superficie geometrica 3D a partir da informação de
+textura
+---
     Segmentação é um termo comumente usado para identificar diferenças entre objetos 
 interessantes ou desinteressantes como também de distinguir primeiro plano(foreground) de
 segundo plano(background), realçando pequenas partes da imagem, facilitando a analise feita
