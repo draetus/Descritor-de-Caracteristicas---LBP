@@ -2,13 +2,15 @@ Livros:
 1. Probabilidade e estatisticas pro curso de Informatica e engenharia
 *----------------------------*----------------------------*----------------------------*
 
-Título: Classificação de coloração imuno-histoquímica em imagens microscópicas
-
-Autores: Marcelo Dornbusch Lopes
-Orientador: Eros Comunello, Dr. rer. nat.
-
-Local: São José (SC)
-Data: Fevereiro de 2015
+_________________________________________________________________________________
+|Título: Classificação de coloração imuno-histoquímica em imagens microscópicas |
+|                                                                               |
+|Autores: Marcelo Dornbusch Lopes                                               |
+|Orientador: Eros Comunello, Dr. rer. nat.                                      |
+|                                                                               |
+|Local: São José (SC)                                                           |
+|Data: Fevereiro de 2015                                                        |
+---------------------------------------------------------------------------------
 
 Problema Abordado:
     Descrição e classificação automatizada da expressão de biomarcadores em imagens 
@@ -43,7 +45,7 @@ de testes com 10 imagens (com dimensões 508x508), referentes ao anticorpo CAB00
 _______________________________________
     No teste piloto de classificação foi utilizado 10 imagens, avaliando o comportamento dos 
 três descritores(RGB,RGB-LBP completo, e o primeiro descritor reduzido).O maior valor da 
-Taxa de Verdadeiro Positivo foi encontrado com o descritor RHB simples(0.9986), a maior
+Taxa de Verdadeiro Positivo foi encontrado com o descritor RGB simples(0.9986), a maior
 medida de Taxa de Verdadeiro Negativo foi encontrada com o descrito LBP Completo(0.9995).
 A maior diferença entre descritores ocorreu na medida de Precisão, 0.9522 do descrito LBP
 reduzido(Média e Energia), contra 0.8594 do descritor RGB.
@@ -66,6 +68,8 @@ foram avaliados durante o trabalho.
     A principal contribuição alcançada com este trabalho de pesquisa foi aprimorar o 
 método classificação de coloração em imagens de IHQ, considerando as medidas de Precisão,
 Taxa de Falso Negativo e Taxa de Falso Descobrimento, apresentado por Sobieranski.
+
+*----------------------------*----------------------------*----------------------------*
 
 
 http://www.cbpf.br/cat/pdsi/pdf/ProcessamentoImagens.PDF
