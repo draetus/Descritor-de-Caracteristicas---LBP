@@ -13,4 +13,5 @@ public:
     ~LBP();
 
     void static run(const cv::Mat &img_input, cv::Mat &img_output);
+    void static run_and_show(const cv::Mat &img_input, cv::Mat &img_output);
 };

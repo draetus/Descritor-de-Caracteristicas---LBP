@@ -1,4 +1,4 @@
-#include <LBP.h>
+#include "LBP.h"
 
 LBP::LBP(){}
 
@@ -74,4 +74,20 @@ void LBP::run(const cv::Mat &img_input, cv::Mat &img_output)
             break;
 
     }
+}
+
+void LBP::run_and_show(const cv::Mat &img_input, cv::Mat &img_output)
+{
+    run(img_input, img_output);
+
+    cv::namedWindow("LBP Image", cv::WINDOW_AUTOSIZE);
+    cv::imshow("Input LBP Image", img_input);
+    cv::waitKeyEx(0);
+
+    cv::Mat LBP_image;
+
+    cv::namedWindow("LBP Image", cv::WINDOW_AUTOSIZE);
+    cv::imshow("Output LBP Image", img_output);
+    cv::waitKeyEx(0);
+
 }
