@@ -1,10 +1,12 @@
-#include <opencv2/opencv.hpp>
-#include <iostream>
-#include <math.h>
+#include <LBP.h>
 
+LBP::LBP(){}
+
+LBP::~LBP(){}
+    
 
 template <typename _Tp>
-void LBP_(const cv::Mat& src, cv::Mat& dst)
+void LBP::LBP_(const cv::Mat& src, cv::Mat& dst)
 {
     dst = cv::Mat::zeros(src.rows - 1, src.cols - 1, CV_8UC1);
     for (int i = 1; i < src.rows ; i++)
@@ -26,8 +28,7 @@ void LBP_(const cv::Mat& src, cv::Mat& dst)
     }
 }
 
-
-void run(const cv::Mat &img_input, cv::Mat &img_output)
+void LBP::run(const cv::Mat &img_input, cv::Mat &img_output)
 {
     if (img_input.empty())
         return;
@@ -73,21 +74,4 @@ void run(const cv::Mat &img_input, cv::Mat &img_output)
             break;
 
     }
-}
-
-int main(int argc, char** argv)
-{
-    cv::Mat original_image = cv::imread(argv[1], 1);
-    
-    cv::namedWindow("LBP Image", cv::WINDOW_AUTOSIZE);
-    cv::imshow("LBP Image", original_image);
-    cv::waitKeyEx(0);
-
-    cv::Mat LBP_image;
-    run(original_image, LBP_image);
-
-    cv::namedWindow("LBP Image", cv::WINDOW_AUTOSIZE);
-    cv::imshow("LBP Image", LBP_image);
-    cv::waitKeyEx(0);
- 
 }
