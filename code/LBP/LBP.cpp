@@ -1,10 +1,12 @@
-#include "LBP.h"
+#include "LBP.hpp"
 
 LBP::LBP(){}
 
 LBP::~LBP(){}
     
-
+/*
+ * Execute the LBP Algorithm
+ */
 template <typename _Tp>
 void LBP::LBP_(const cv::Mat& src, cv::Mat& dst)
 {
@@ -28,6 +30,9 @@ void LBP::LBP_(const cv::Mat& src, cv::Mat& dst)
     }
 }
 
+/*
+ * Main function that selects which type of LBP to use and other tests
+ */
 void LBP::run(const cv::Mat &img_input, cv::Mat &img_output)
 {
     if (img_input.empty())
@@ -76,6 +81,9 @@ void LBP::run(const cv::Mat &img_input, cv::Mat &img_output)
     }
 }
 
+/*
+ * Does the same as run() but shows the image in a new window
+ */
 void LBP::run_and_show(const cv::Mat &img_input, cv::Mat &img_output)
 {
     run(img_input, img_output);
@@ -89,5 +97,4 @@ void LBP::run_and_show(const cv::Mat &img_input, cv::Mat &img_output)
     cv::namedWindow("LBP Image", cv::WINDOW_AUTOSIZE);
     cv::imshow("Output LBP Image", img_output);
     cv::waitKeyEx(0);
-
 }
