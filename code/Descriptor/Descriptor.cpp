@@ -27,7 +27,7 @@ void Descriptor::sumArea(const cv::Mat& lbp_image, int posX, int posY, int range
     {
         for (int j=posY-rangeY; j<=posY+rangeY; j++)
         {
-            minor_sum += (int)lbp_image.at<_Tp>(i,j);
+            minor_sum += (int)lbp_image.at<_Tp>(i,j);       //Navigates through all pixels in the area and sum them
             k++;
         }
     }
@@ -56,32 +56,53 @@ void Descriptor::average(const cv::Mat& lbp_image, int i, int j)
     }
 }
 
+/*
+ * Function that calculates the standard deviation values vector of an image
+ * Calculation based on a LBP image
+ */
 template <typename _Tp>
 void Descriptor::standard_deviation(const cv::Mat& lbp_image, int i, int j)
 {
 }
 
+/*
+ * Function that calculates the asymmetry values vector of an image
+ * Calculation based on a LBP image
+ */
 template <typename _Tp>
 void Descriptor::asymmetry(const cv::Mat& lbp_image, int i, int j)
 {
 }
 
+/*
+ * Function that calculates the curtose values vector of an image
+ * Calculation based on a LBP image
+ */
 template <typename _Tp>
 void Descriptor::curtose(const cv::Mat& lbp_image, int i, int j)
 {
 }
 
+/*
+ * Function that calculates the energy values vector of an image
+ * Calculation based on a LBP image
+ */
 template <typename _Tp>
 void energy(const cv::Mat& lbp_image, int i, int j)
 {
 }
 
+/**
+ * Main Function that runs the descriptor and fills the feature vector
+ * It runs and then clean the Classes vector to ensure that it doesn't
+ * interfere in the next runs
+ */
 void Descriptor::run(const cv::Mat& image, std::vector<std::vector<float> >& featVec, int i, int j)
 {
-    if (image.channels() > 1)
+    if (image.channels() > 1)        //Checking if the image is valid (LBP Image)
         return;
 
-    switch (image.type())
+    switch (image.type())            //identifying the image type
     {
         case CV_8SC1:
             this->average<char>(image, i, j);
@@ -112,4 +133,5 @@ void Descriptor::run(const cv::Mat& image, std::vector<std::vector<float> >& fea
             break;
     }
     featVec.push_back(this->average_Vec);
+    this->clear();
 }
