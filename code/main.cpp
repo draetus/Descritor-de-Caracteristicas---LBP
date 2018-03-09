@@ -16,8 +16,6 @@ int main(int argc, char** argv)
     Descriptor desc;
     desc.run(LBP_image, featVec, 3, 3);
 
-    std::cout << featVec.size();
-    std::cout << "TAMANHO: " << featVec[0].size() << std::endl;
     for (int i=0; i<featVec[0].size(); i++)
     {
         std::cout << featVec[0][i] << std::endl;

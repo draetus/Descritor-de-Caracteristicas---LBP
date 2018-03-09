@@ -81,8 +81,6 @@ void Descriptor::run(const cv::Mat& image, std::vector<std::vector<float> >& fea
     if (image.channels() > 1)
         return;
 
-    featVec.push_back(this->average_Vec);
-
     switch (image.type())
     {
         case CV_8SC1:
@@ -113,4 +111,5 @@ void Descriptor::run(const cv::Mat& image, std::vector<std::vector<float> >& fea
             this->average<double>(image, i, j);
             break;
     }
+    featVec.push_back(this->average_Vec);
 }
