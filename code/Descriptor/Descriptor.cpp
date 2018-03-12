@@ -9,8 +9,7 @@ Descriptor::~Descriptor(){}
  */
 void Descriptor::clear() {
     this->average_Vec.clear();
-    this->standard_deviation_Vec.clear();
-    this->asymmetry_Vec.clear();
+    this->standard_deviation_Vec.clear(); this->asymmetry_Vec.clear();
     this->curtose_Vec.clear();
     this->energy_Vec.clear();
 }
@@ -19,20 +18,37 @@ void Descriptor::clear() {
  * Function that starts the sum with the higher left term
  */
 template <typename _Tp>
-void Descriptor::sumArea(const cv::Mat& lbp_image, int posX, int posY, int rangeX, int rangeY)
+int Descriptor::Sum(const cv::Mat& lbp_image, int posX, int posY, int rangeX, int rangeY, int pot)
 {
     int minor_sum = 0;
+    for (int i=posX-rangeX; i<=posX+rangeX; i++)
+    {
+        for (int j=posY-rangeY; j<=posY+rangeY; j++)
+        {
+            minor_sum += std::pow((int)lbp_image.at<_Tp>(i,j), pot);       //Navigates through all pixels in the area and sum them
+        }
+    }
+    return minor_sum;
+}
+
+
+template <typename _Tp>
+float Descriptor::SumMinusAverage(const cv::Mat& lbp_image, int posX, int posY, int rangeX, int rangeY, int pot)
+{
+    float minor_sum = 0;
     int k=0;
     for (int i=posX-rangeX; i<=posX+rangeX; i++)
     {
         for (int j=posY-rangeY; j<=posY+rangeY; j++)
         {
-            minor_sum += (int)lbp_image.at<_Tp>(i,j);       //Navigates through all pixels in the area and sum them
+            minor_sum += std::pow( (float)lbp_image.at<_Tp>(i,j) -
+                    this->average_Vec[k], pot);
             k++;
         }
     }
-    Sum.push_back(minor_sum);
+    return minor_sum;
 }
+
 
 
 /*
@@ -43,13 +59,14 @@ template <typename _Tp>
 void Descriptor::average(const cv::Mat& lbp_image, int i, int j)
 {
     int k = 0;
+    int sum;
 
     for (int m=8; m<lbp_image.rows-8; m++)                   //Getting the center pixel row
     {
         for (int n=8; n<lbp_image.cols-8; n++)               //Getting the center pixel col
         {
-            sumArea<_Tp>(lbp_image, m, n, i/2, j/2);
-            this->average_Vec.push_back(Sum[k] / (i*j));
+            sum = Sum<_Tp>(lbp_image, m, n, i/2, j/2);
+            this->average_Vec.push_back(sum / (i*j));
             k++;
             //this->average_Vec.push_back( sumArea( lbp_image, m, n, i, j ) / (i*j) );
         }
@@ -63,6 +80,19 @@ void Descriptor::average(const cv::Mat& lbp_image, int i, int j)
 template <typename _Tp>
 void Descriptor::standard_deviation(const cv::Mat& lbp_image, int i, int j)
 {
+    int k=0;
+    float aux;
+
+    for (int m=8; m<lbp_image.rows-8; m++)
+    {
+        for (int n=8; n<lbp_image.cols-8; n++)
+        {
+            aux = this->SumMinusAverage<_Tp>(lbp_image, m, n, i/2, j/2, 2);
+            aux = std::sqrt(aux/(i*j));
+            this->standard_deviation_Vec.push_back(aux);
+            k++;
+        }
+    }
 }
 
 /*
@@ -72,6 +102,20 @@ void Descriptor::standard_deviation(const cv::Mat& lbp_image, int i, int j)
 template <typename _Tp>
 void Descriptor::asymmetry(const cv::Mat& lbp_image, int i, int j)
 {
+    int k=0;
+    float aux;
+
+    for (int m=8; m<lbp_image.rows-8; m++)
+    {
+        for (int n=8; n<lbp_image.cols-8; n++)
+        {
+            aux = this->SumMinusAverage<_Tp>(lbp_image, m, n, i/2, j/2, 3);
+            aux = aux / (i * j * std::pow(this->standard_deviation_Vec[k], 3));
+            this->asymmetry_Vec.push_back(aux);
+            k++;
+        }
+    }
+
 }
 
 /*
@@ -81,6 +125,20 @@ void Descriptor::asymmetry(const cv::Mat& lbp_image, int i, int j)
 template <typename _Tp>
 void Descriptor::curtose(const cv::Mat& lbp_image, int i, int j)
 {
+    int k=0;
+    float aux;
+
+    for (int m=8; m<lbp_image.rows-8; m++)
+    {
+        for (int n=8; n<lbp_image.cols-8; n++)
+        {
+            aux = this->SumMinusAverage<_Tp>(lbp_image, m, n, i/2, j/2, 4);
+            aux = aux / (i * j * std::pow(this->asymmetry_Vec[k], 4));
+            this->curtose_Vec.push_back(aux);
+            k++;
+        }
+    }
+
 }
 
 /*
@@ -88,8 +146,19 @@ void Descriptor::curtose(const cv::Mat& lbp_image, int i, int j)
  * Calculation based on a LBP image
  */
 template <typename _Tp>
-void energy(const cv::Mat& lbp_image, int i, int j)
+void Descriptor::energy(const cv::Mat& lbp_image, int i, int j)
 {
+    int k=0;
+    int sum;
+
+    for (int m=8; m<lbp_image.rows-8; m++)
+    {
+        for (int n=8; n<lbp_image.cols-8; n++)
+        {
+            sum = Sum<_Tp>(lbp_image, m, n, i/2, j/2, 2);
+            this->energy_Vec.push_back(sum);
+        }
+    }
 }
 
 /**
@@ -106,32 +175,69 @@ void Descriptor::run(const cv::Mat& image, std::vector<std::vector<float> >& fea
     {
         case CV_8SC1:
             this->average<char>(image, i, j);
+            this->standard_deviation<char>(image, i, j);
+            this->asymmetry<char>(image, i, j);
+            this->curtose<char>(image, i, j);
+            this->energy<char>(image, i, j);
             break;
 
         case CV_8UC1:
             this->average<unsigned char>(image, i, j);
+            this->standard_deviation<unsigned char>(image, i, j);
+            this->asymmetry<unsigned char>(image, i, j);
+            this->curtose<unsigned char>(image, i, j);
+            this->energy<unsigned char>(image, i, j);
+
             break;
             
         case CV_16SC1:
             this->average<short>(image, i, j);
+            this->standard_deviation<short>(image, i, j);
+            this->asymmetry<short>(image, i, j);
+            this->curtose<short>(image, i, j);
+            this->energy<short>(image, i, j);
+
             break;
                 
         case CV_16UC1:
             this->average<unsigned short>(image, i, j);
+            this->standard_deviation<unsigned short>(image, i, j);
+            this->asymmetry<unsigned short>(image, i, j);
+            this->curtose<unsigned short>(image, i, j);
+            this->energy<unsigned short>(image, i, j);
+
             break;
 
         case CV_32SC1:
             this->average<int>(image, i, j);
+            this->standard_deviation<int>(image, i, j);
+            this->asymmetry<int>(image, i, j);
+            this->curtose<int>(image, i, j);
+            this->energy<int>(image, i, j);
+
             break;
 
         case CV_32FC1:
             this->average<float>(image, i, j);
+            this->standard_deviation<float>(image, i, j);
+            this->asymmetry<float>(image, i, j);
+            this->curtose<float>(image, i, j);
+            this->energy<float>(image, i, j);
+
             break;
 
         case CV_64FC1:
             this->average<double>(image, i, j);
+            this->standard_deviation<double>(image, i, j);
+            this->asymmetry<double>(image, i, j);
+            this->curtose<double>(image, i, j);
+            this->energy<double>(image, i, j);
             break;
     }
     featVec.push_back(this->average_Vec);
+    featVec.push_back(this->standard_deviation_Vec);
+    featVec.push_back(this->asymmetry_Vec);
+    featVec.push_back(this->curtose_Vec);
+    featVec.push_back(this->energy_Vec);
     this->clear();
 }

@@ -18,6 +18,6 @@ int main(int argc, char** argv)
 
     for (int i=0; i<featVec[0].size(); i++)
     {
-        std::cout << featVec[0][i] << std::endl;
+        std::cout << (int)featVec[3][i] << " " ;
     }
 }

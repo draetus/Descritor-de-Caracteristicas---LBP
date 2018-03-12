@@ -1,14 +1,17 @@
 #include <opencv2/opencv.hpp>
 #include <vector>
+#include <math.h>
 
 class Descriptor
 {
 private:
 	std::vector<float> average_Vec, standard_deviation_Vec, asymmetry_Vec, curtose_Vec, energy_Vec;
-	std::vector<int> Sum;
 
 	template <typename _Tp>
-	void sumArea(const cv::Mat& lbp_image, int posX, int posY, int rangeX, int rangeY);
+	int Sum(const cv::Mat& lbp_image, int posX, int posY, int rangeX, int rangeY, int pot=1);
+
+	template <typename _Tp>
+	float SumMinusAverage(const cv::Mat& lbp_image, int posX, int posY, int rangeX, int rangeY, int pot);
 
 	template <typename _Tp>
 	void average(const cv::Mat& lbp_image, int i, int j);
