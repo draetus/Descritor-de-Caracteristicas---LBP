@@ -15,9 +15,10 @@ int main(int argc, char** argv)
 
     Descriptor desc;
     desc.run(LBP_image, featVec, 3, 3);
+    
 
-    for (int i=0; i<featVec[0].size(); i++)
+/*    for (int i=0; i<featVec[0].size(); i++)
     {
-        std::cout << (int)featVec[3][i] << " " ;
-    }
+        std::cout << (int)featVec[2][i] << " " ;
+    }*/
 }

@@ -21,6 +21,7 @@ template <typename _Tp>
 int Descriptor::Sum(const cv::Mat& lbp_image, int posX, int posY, int rangeX, int rangeY, int pot)
 {
     int minor_sum = 0;
+    int count=0;
     for (int i=posX-rangeX; i<=posX+rangeX; i++)
     {
         for (int j=posY-rangeY; j<=posY+rangeY; j++)
@@ -36,14 +37,13 @@ template <typename _Tp>
 float Descriptor::SumMinusAverage(const cv::Mat& lbp_image, int posX, int posY, int rangeX, int rangeY, int pot)
 {
     float minor_sum = 0;
-    int k=0;
+    int k = (posX-8)*(lbp_image.cols-16) + posY-8;
     for (int i=posX-rangeX; i<=posX+rangeX; i++)
     {
         for (int j=posY-rangeY; j<=posY+rangeY; j++)
         {
             minor_sum += std::pow( (float)lbp_image.at<_Tp>(i,j) -
                     this->average_Vec[k], pot);
-            k++;
         }
     }
     return minor_sum;
@@ -58,8 +58,8 @@ float Descriptor::SumMinusAverage(const cv::Mat& lbp_image, int posX, int posY, 
 template <typename _Tp>
 void Descriptor::average(const cv::Mat& lbp_image, int i, int j)
 {
-    int k = 0;
     int sum;
+    int count=0;
 
     for (int m=8; m<lbp_image.rows-8; m++)                   //Getting the center pixel row
     {
@@ -67,10 +67,9 @@ void Descriptor::average(const cv::Mat& lbp_image, int i, int j)
         {
             sum = Sum<_Tp>(lbp_image, m, n, i/2, j/2);
             this->average_Vec.push_back(sum / (i*j));
-            k++;
-            //this->average_Vec.push_back( sumArea( lbp_image, m, n, i, j ) / (i*j) );
         }
     }
+
 }
 
 /*
@@ -80,7 +79,6 @@ void Descriptor::average(const cv::Mat& lbp_image, int i, int j)
 template <typename _Tp>
 void Descriptor::standard_deviation(const cv::Mat& lbp_image, int i, int j)
 {
-    int k=0;
     float aux;
 
     for (int m=8; m<lbp_image.rows-8; m++)
@@ -90,7 +88,6 @@ void Descriptor::standard_deviation(const cv::Mat& lbp_image, int i, int j)
             aux = this->SumMinusAverage<_Tp>(lbp_image, m, n, i/2, j/2, 2);
             aux = std::sqrt(aux/(i*j));
             this->standard_deviation_Vec.push_back(aux);
-            k++;
         }
     }
 }
@@ -102,20 +99,19 @@ void Descriptor::standard_deviation(const cv::Mat& lbp_image, int i, int j)
 template <typename _Tp>
 void Descriptor::asymmetry(const cv::Mat& lbp_image, int i, int j)
 {
-    int k=0;
+    int k;
     float aux;
 
     for (int m=8; m<lbp_image.rows-8; m++)
     {
         for (int n=8; n<lbp_image.cols-8; n++)
         {
+            k = (m-8)*(lbp_image.cols-16) + n-8;
             aux = this->SumMinusAverage<_Tp>(lbp_image, m, n, i/2, j/2, 3);
             aux = aux / (i * j * std::pow(this->standard_deviation_Vec[k], 3));
             this->asymmetry_Vec.push_back(aux);
-            k++;
         }
     }
-
 }
 
 /*
@@ -125,20 +121,19 @@ void Descriptor::asymmetry(const cv::Mat& lbp_image, int i, int j)
 template <typename _Tp>
 void Descriptor::curtose(const cv::Mat& lbp_image, int i, int j)
 {
-    int k=0;
+    int k;
     float aux;
 
     for (int m=8; m<lbp_image.rows-8; m++)
     {
         for (int n=8; n<lbp_image.cols-8; n++)
         {
+            k = (m-8)*(lbp_image.cols-16) + n-8;
             aux = this->SumMinusAverage<_Tp>(lbp_image, m, n, i/2, j/2, 4);
-            aux = aux / (i * j * std::pow(this->asymmetry_Vec[k], 4));
+            aux = aux / (i * j * std::pow(this->standard_deviation_Vec[k], 4));
             this->curtose_Vec.push_back(aux);
-            k++;
         }
     }
-
 }
 
 /*
@@ -149,14 +144,14 @@ template <typename _Tp>
 void Descriptor::energy(const cv::Mat& lbp_image, int i, int j)
 {
     int k=0;
-    int sum;
+    float sum;
 
     for (int m=8; m<lbp_image.rows-8; m++)
     {
         for (int n=8; n<lbp_image.cols-8; n++)
         {
             sum = Sum<_Tp>(lbp_image, m, n, i/2, j/2, 2);
-            this->energy_Vec.push_back(sum);
+            this->energy_Vec.push_back(sum/(i*j));
         }
     }
 }
@@ -179,6 +174,7 @@ void Descriptor::run(const cv::Mat& image, std::vector<std::vector<float> >& fea
             this->asymmetry<char>(image, i, j);
             this->curtose<char>(image, i, j);
             this->energy<char>(image, i, j);
+
             break;
 
         case CV_8UC1:
@@ -232,6 +228,7 @@ void Descriptor::run(const cv::Mat& image, std::vector<std::vector<float> >& fea
             this->asymmetry<double>(image, i, j);
             this->curtose<double>(image, i, j);
             this->energy<double>(image, i, j);
+
             break;
     }
     featVec.push_back(this->average_Vec);

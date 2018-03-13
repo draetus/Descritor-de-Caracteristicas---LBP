@@ -11,7 +11,7 @@ private:
 	int Sum(const cv::Mat& lbp_image, int posX, int posY, int rangeX, int rangeY, int pot=1);
 
 	template <typename _Tp>
-	float SumMinusAverage(const cv::Mat& lbp_image, int posX, int posY, int rangeX, int rangeY, int pot);
+	float SumMinusAverage(const cv::Mat& lbp_image, int posX, int posY, int rangeX, int rangeY, int pot=1);
 
 	template <typename _Tp>
 	void average(const cv::Mat& lbp_image, int i, int j);
