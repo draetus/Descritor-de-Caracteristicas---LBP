@@ -161,80 +161,86 @@ void Descriptor::energy(const cv::Mat& lbp_image, int i, int j)
  * It runs and then clean the Classes vector to ensure that it doesn't
  * interfere in the next runs
  */
-void Descriptor::run(const cv::Mat& image, std::vector<std::vector<float> >& featVec, int i, int j)
+void Descriptor::run(const cv::Mat& image, std::vector<std::vector<float> >& featVec)
 {
     if (image.channels() > 1)        //Checking if the image is valid (LBP Image)
         return;
 
-    switch (image.type())            //identifying the image type
+    int i,j;
+
+    for (i=3; i<10; i+=2)
     {
-        case CV_8SC1:
-            this->average<char>(image, i, j);
-            this->standard_deviation<char>(image, i, j);
-            this->asymmetry<char>(image, i, j);
-            this->curtose<char>(image, i, j);
-            this->energy<char>(image, i, j);
+        j=i;
+        switch (image.type())            //identifying the image type
+        {
+            case CV_8SC1:
+                this->average<char>(image, i, j);
+                this->standard_deviation<char>(image, i, j);
+                this->asymmetry<char>(image, i, j);
+                this->curtose<char>(image, i, j);
+                this->energy<char>(image, i, j);
 
-            break;
+                break;
 
-        case CV_8UC1:
-            this->average<unsigned char>(image, i, j);
-            this->standard_deviation<unsigned char>(image, i, j);
-            this->asymmetry<unsigned char>(image, i, j);
-            this->curtose<unsigned char>(image, i, j);
-            this->energy<unsigned char>(image, i, j);
+            case CV_8UC1:
+                this->average<unsigned char>(image, i, j);
+                this->standard_deviation<unsigned char>(image, i, j);
+                this->asymmetry<unsigned char>(image, i, j);
+                this->curtose<unsigned char>(image, i, j);
+                this->energy<unsigned char>(image, i, j);
 
-            break;
-            
-        case CV_16SC1:
-            this->average<short>(image, i, j);
-            this->standard_deviation<short>(image, i, j);
-            this->asymmetry<short>(image, i, j);
-            this->curtose<short>(image, i, j);
-            this->energy<short>(image, i, j);
-
-            break;
+                break;
                 
-        case CV_16UC1:
-            this->average<unsigned short>(image, i, j);
-            this->standard_deviation<unsigned short>(image, i, j);
-            this->asymmetry<unsigned short>(image, i, j);
-            this->curtose<unsigned short>(image, i, j);
-            this->energy<unsigned short>(image, i, j);
+            case CV_16SC1:
+                this->average<short>(image, i, j);
+                this->standard_deviation<short>(image, i, j);
+                this->asymmetry<short>(image, i, j);
+                this->curtose<short>(image, i, j);
+                this->energy<short>(image, i, j);
 
-            break;
+                break;
+                    
+            case CV_16UC1:
+                this->average<unsigned short>(image, i, j);
+                this->standard_deviation<unsigned short>(image, i, j);
+                this->asymmetry<unsigned short>(image, i, j);
+                this->curtose<unsigned short>(image, i, j);
+                this->energy<unsigned short>(image, i, j);
 
-        case CV_32SC1:
-            this->average<int>(image, i, j);
-            this->standard_deviation<int>(image, i, j);
-            this->asymmetry<int>(image, i, j);
-            this->curtose<int>(image, i, j);
-            this->energy<int>(image, i, j);
+                break;
 
-            break;
+            case CV_32SC1:
+                this->average<int>(image, i, j);
+                this->standard_deviation<int>(image, i, j);
+                this->asymmetry<int>(image, i, j);
+                this->curtose<int>(image, i, j);
+                this->energy<int>(image, i, j);
 
-        case CV_32FC1:
-            this->average<float>(image, i, j);
-            this->standard_deviation<float>(image, i, j);
-            this->asymmetry<float>(image, i, j);
-            this->curtose<float>(image, i, j);
-            this->energy<float>(image, i, j);
+                break;
 
-            break;
+            case CV_32FC1:
+                this->average<float>(image, i, j);
+                this->standard_deviation<float>(image, i, j);
+                this->asymmetry<float>(image, i, j);
+                this->curtose<float>(image, i, j);
+                this->energy<float>(image, i, j);
 
-        case CV_64FC1:
-            this->average<double>(image, i, j);
-            this->standard_deviation<double>(image, i, j);
-            this->asymmetry<double>(image, i, j);
-            this->curtose<double>(image, i, j);
-            this->energy<double>(image, i, j);
+                break;
 
-            break;
+            case CV_64FC1:
+                this->average<double>(image, i, j);
+                this->standard_deviation<double>(image, i, j);
+                this->asymmetry<double>(image, i, j);
+                this->curtose<double>(image, i, j);
+                this->energy<double>(image, i, j);
+
+                break;
+        }
+        featVec.push_back(this->average_Vec);
+        featVec.push_back(this->standard_deviation_Vec);
+        featVec.push_back(this->asymmetry_Vec);
+        featVec.push_back(this->curtose_Vec);
+        featVec.push_back(this->energy_Vec);
+        this->clear();
     }
-    featVec.push_back(this->average_Vec);
-    featVec.push_back(this->standard_deviation_Vec);
-    featVec.push_back(this->asymmetry_Vec);
-    featVec.push_back(this->curtose_Vec);
-    featVec.push_back(this->energy_Vec);
-    this->clear();
 }

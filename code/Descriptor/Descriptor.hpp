@@ -30,6 +30,6 @@ private:
 public:
 	Descriptor();
 	~Descriptor();
-	void run(const cv::Mat& image, std::vector<std::vector<float> >& featVec, int i, int j);
+	void run(const cv::Mat& image, std::vector<std::vector<float> >& featVec);
 	void clear();
 };
