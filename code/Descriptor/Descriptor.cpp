@@ -1,4 +1,5 @@
 #include "Descriptor.hpp"
+#include <iostream>
 
 Descriptor::Descriptor(){}
 
@@ -161,12 +162,30 @@ void Descriptor::energy(const cv::Mat& lbp_image, int i, int j)
  * It runs and then clean the Classes vector to ensure that it doesn't
  * interfere in the next runs
  */
-void Descriptor::run(const cv::Mat& image, std::vector<std::vector<float> >& featVec)
+void Descriptor::run(const cv::Mat& original_image, const cv::Mat& image, std::vector<std::vector<float> >& featVec)
 {
     if (image.channels() > 1)        //Checking if the image is valid (LBP Image)
         return;
 
     int i,j;
+
+    cv::Mat HSV_image;
+    cv::cvtColor(original_image, HSV_image, CV_BGR2HSV);
+
+    std::vector<float> h,s,v;                  //Adding the HSV values in the feature vector
+
+    for (int m=8; m<image.rows-8; m++)
+    {
+        for (int n=8; n<image.cols-8; n++)
+        {
+            h.push_back((float)HSV_image.at<cv::Vec3b>(m,n)[0]);
+            s.push_back((float)HSV_image.at<cv::Vec3b>(m,n)[1]);
+            v.push_back((float)HSV_image.at<cv::Vec3b>(m,n)[2]);
+        }
+    }
+    featVec.push_back(h);
+    featVec.push_back(s);
+    featVec.push_back(v);
 
     for (i=3; i<10; i+=2)
     {
