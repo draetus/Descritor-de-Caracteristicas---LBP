@@ -29,7 +29,7 @@ SVM::SVM(std::vector<std::vector<float> > &featVec)
 
 cv::Mat& SVM::labelData(int rows, int cols, const std::vector<std::vector<float> > &featVec, int equation)
 {
-    cv::Mat labels(featVec[0].size(), 1, CV_32FC1);
+/*    cv::Mat labels(featVec[0].size(), 1, CV_32FC1);
     for (int i = 0; i < rows; i++)
     {
         for (int j = 0; j < cols; j++)
@@ -42,7 +42,7 @@ cv::Mat& SVM::labelData(int rows, int cols, const std::vector<std::vector<float>
             featVec[5][i*cols + j];
             featVec[6][i*cols + j];
         }
-    }
+    }*/
 }
 
 int SVM::f(float x, float y, int equation)

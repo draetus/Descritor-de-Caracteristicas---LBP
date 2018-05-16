@@ -5,16 +5,16 @@
 
 int main(int argc, char** argv)
 {
-    cv::Mat original_image = cv::imread(argv[1], 1);
+    cv::Mat original_image = cv::imread(argv[1], 1);  //Loading image
     cv::Mat LBP_image, HSV_image;
 
-    LBP::run_and_show(original_image, LBP_image);
-    cv::cvtColor(original_image, HSV_image, CV_BGR2HSV);
+    LBP::run_and_show(original_image, LBP_image);      // Creating LBP image
+    cv::cvtColor(original_image, HSV_image, CV_BGR2HSV);  //Converting image to HSV
 
-    std::vector<std::vector<float> > featVec;
+    std::vector<std::vector<float> > featVec;           //Feature Vector
 
     Descriptor desc;
-    desc.run(original_image, LBP_image, featVec);
+    desc.run(original_image, LBP_image, featVec);     //Filling the Feature Vector with the calculated data
 
 /*
     for (int i=0; i<featVec.size(); i++)
@@ -25,9 +25,9 @@ int main(int argc, char** argv)
         }
     }
 */
-    std::cout << "NUMERO: " << (original_image.rows-17) * (original_image.cols-17) << "\n";
+    std::cout << "NUMERO: " << (original_image.rows-17) * (original_image.cols-17) << "\n";   //Printing the expected size of vectors
 
-    for (int i=0; i<featVec.size(); i++)
+    for (int i=0; i<featVec.size(); i++)          //Printing size of vectors
     {
         std::cout << featVec[i].size() << "\n";
     }
@@ -38,7 +38,7 @@ int main(int argc, char** argv)
                              "Media 7x7", "Desvio Padrao 7x7", "Assimetria 7x7", "Curtose 7x7", "Energia 7x7",
                              "Media 9x9", "Desvio Padrao 9x9", "Assimetria 9x9", "Curtose 9x9", "Energia 9x9",};
 
-    for (int i=0; i<featVec.size(); i++)
+    for (int i=0; i<featVec.size(); i++)         //Printing the complete Feature Vector
     {
         for (int j=0; j<featVec[i].size(); j++)
         {
