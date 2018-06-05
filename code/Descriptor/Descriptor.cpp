@@ -100,8 +100,8 @@ void Descriptor::standard_deviation(const cv::Mat& lbp_image, int i, int j)
 template <typename _Tp>
 void Descriptor::asymmetry(const cv::Mat& lbp_image, int i, int j)
 {
-    int k;
-    float aux;
+    long k;
+    double aux;
 
     for (int m=8; m<lbp_image.rows-8; m++)
     {
@@ -109,7 +109,14 @@ void Descriptor::asymmetry(const cv::Mat& lbp_image, int i, int j)
         {
             k = (m-8)*(lbp_image.cols-16) + n-8;
             aux = this->SumMinusAverage<_Tp>(lbp_image, m, n, i/2, j/2, 3);
-            aux = aux / (i * j * std::pow(this->standard_deviation_Vec[k], 3));
+            if (i * j * std::pow(this->standard_deviation_Vec[k], 3) == 0)
+            {
+                aux = 0;
+            }
+            else
+            {
+                aux = aux / (i * j * std::pow(this->standard_deviation_Vec[k], 3));
+            }
             this->asymmetry_Vec.push_back(aux);
         }
     }
@@ -131,7 +138,14 @@ void Descriptor::curtose(const cv::Mat& lbp_image, int i, int j)
         {
             k = (m-8)*(lbp_image.cols-16) + n-8;
             aux = this->SumMinusAverage<_Tp>(lbp_image, m, n, i/2, j/2, 4);
-            aux = aux / (i * j * std::pow(this->standard_deviation_Vec[k], 4));
+            if (i * j * std::pow(this->standard_deviation_Vec[k], 4) == 0)
+            {
+                aux = 0;
+            }
+            else
+            {
+                aux = aux / (i * j * std::pow(this->standard_deviation_Vec[k], 4));
+            }
             this->curtose_Vec.push_back(aux);
         }
     }
@@ -162,7 +176,7 @@ void Descriptor::energy(const cv::Mat& lbp_image, int i, int j)
  * It runs and then clean the Classes vector to ensure that it doesn't
  * interfere in the next runs
  */
-void Descriptor::run(const cv::Mat& original_image, const cv::Mat& image, std::vector<std::vector<float> >& featVec)
+void Descriptor::run(const cv::Mat& original_image, const cv::Mat& image, std::vector<std::vector<double> >& featVec)
 {
     if (image.channels() > 1)        //Checking if the image is valid (LBP Image)
         return;
@@ -172,15 +186,15 @@ void Descriptor::run(const cv::Mat& original_image, const cv::Mat& image, std::v
     cv::Mat HSV_image;
     cv::cvtColor(original_image, HSV_image, CV_BGR2HSV);
 
-    std::vector<float> h,s,v;                  //Adding the HSV values in the feature vector
+    std::vector<double> h,s,v;                  //Adding the HSV values in the feature vector
 
     for (int m=8; m<image.rows-8; m++)
     {
         for (int n=8; n<image.cols-8; n++)
         {
-            h.push_back((float)HSV_image.at<cv::Vec3b>(m,n)[0]);
-            s.push_back((float)HSV_image.at<cv::Vec3b>(m,n)[1]);
-            v.push_back((float)HSV_image.at<cv::Vec3b>(m,n)[2]);
+            h.push_back((double)HSV_image.at<cv::Vec3b>(m,n)[0]);
+            s.push_back((double)HSV_image.at<cv::Vec3b>(m,n)[1]);
+            v.push_back((double)HSV_image.at<cv::Vec3b>(m,n)[2]);
         }
     }
     featVec.push_back(h);

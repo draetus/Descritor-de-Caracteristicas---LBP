@@ -5,7 +5,7 @@
 class Descriptor
 {
 private:
-	std::vector<float> average_Vec, standard_deviation_Vec, asymmetry_Vec, curtose_Vec, energy_Vec;
+	std::vector<double> average_Vec, standard_deviation_Vec, asymmetry_Vec, curtose_Vec, energy_Vec;
 
 	template <typename _Tp>
 	int Sum(const cv::Mat& lbp_image, int posX, int posY, int rangeX, int rangeY, int pot=1);
@@ -30,6 +30,6 @@ private:
 public:
 	Descriptor();
 	~Descriptor();
-	void run(const cv::Mat& original_image, const cv::Mat& image, std::vector<std::vector<float> >& featVec);
+	void run(const cv::Mat& original_image, const cv::Mat& image, std::vector<std::vector<double> >& featVec);
 	void clear();
 };

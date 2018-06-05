@@ -11,7 +11,7 @@ int main(int argc, char** argv)
     LBP::run_and_show(original_image, LBP_image);      // Creating LBP image
     cv::cvtColor(original_image, HSV_image, CV_BGR2HSV);  //Converting image to HSV
 
-    std::vector<std::vector<float> > featVec;           //Feature Vector
+    std::vector<std::vector<double> > featVec;           //Feature Vector
 
     Descriptor desc;
     desc.run(original_image, LBP_image, featVec);     //Filling the Feature Vector with the calculated data
@@ -42,7 +42,7 @@ int main(int argc, char** argv)
     {
         for (int j=0; j<featVec[i].size(); j++)
         {
-            std::cout << strings[i] << ": " << (int)featVec[i][j] << "\n";
+            std::cout << strings[i] << ": " << featVec[i][j] << "\n";
         }
     }
 /*
